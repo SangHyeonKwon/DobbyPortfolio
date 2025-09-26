@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dobby의 암호화폐 로스트 - 포트폴리오 분석</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="app-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-left">
+                        <h1 class="app-title">🧙‍♂️ Dobby의 암호화폐 로스트</h1>
+                        <p class="app-subtitle">당신의 포트폴리오를 신랄하게 분석해드립니다</p>
+                    </div>
+                    <div class="header-right">
+                        <div class="header-controls">
+                            <button id="language-toggle" class="language-toggle" title="언어 변경">
+                                <span class="language-text">EN</span>
+                            </button>
+                            <a href="https://x.com/httpskshcokr" target="_blank" class="twitter-link" title="트위터 팔로우">
+                                <svg class="twitter-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <!-- Portfolio Form Section -->
+                <section class="portfolio-form-section">
+                    <div class="card">
+                        <div class="card__body">
+                            <h2 data-i18n="addPortfolio">포트폴리오 추가</h2>
+                            <form id="portfolio-form" class="portfolio-form">
+                                <div class="form-group">
+                                    <label for="coin-symbol" class="form-label" data-i18n="coinSymbol">코인 심볼</label>
+                                     <select id="coin-symbol" class="form-control" required>
+                                         <option value="" data-i18n="selectCoin">코인을 선택하세요</option>
+                                     </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="quantity" class="form-label" data-i18n="quantity">보유 수량</label>
+                                        <input type="number" id="quantity" class="form-control" step="0.00000001" min="0" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="purchase-price" class="form-label" data-i18n="purchasePrice">구매 가격 (USD)</label>
+                                        <input type="number" id="purchase-price" class="form-control" step="0.01" min="0" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn--primary" data-i18n="addButton">포트폴리오에 추가</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Portfolio Table Section -->
+                <section class="portfolio-table-section">
+                    <div class="card">
+                        <div class="card__header">
+                            <h2 data-i18n="myPortfolio">내 포트폴리오</h2>
+                            <button id="refresh-prices" class="btn btn--secondary btn--sm" data-i18n="refreshPrices">가격 새로고침</button>
+                        </div>
+                        <div class="card__body">
+                            <div id="portfolio-loading" class="loading-state hidden">
+                                <div class="loading-spinner"></div>
+                                <p>가격 정보를 가져오는 중...</p>
+                            </div>
+                            <div id="portfolio-empty" class="empty-state">
+                                <p>아직 추가된 암호화폐가 없습니다. 위에서 포트폴리오를 추가해보세요!</p>
+                            </div>
+                            <div id="portfolio-table" class="portfolio-table hidden">
+                                <div class="table-header">
+                                    <div class="table-cell" data-i18n="coin">코인</div>
+                                    <div class="table-cell" data-i18n="quantityCol">수량</div>
+                                    <div class="table-cell" data-i18n="purchasePriceCol">구매가</div>
+                                    <div class="table-cell" data-i18n="currentPrice">현재가</div>
+                                    <div class="table-cell" data-i18n="profitLoss">손익</div>
+                                    <div class="table-cell" data-i18n="action">액션</div>
+                                </div>
+                                <div id="portfolio-rows"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Performance Metrics -->
+                <section class="performance-section">
+                    <div class="metrics-grid">
+                        <div class="metric-card" data-metric="invested">
+                            <h3 class="metric-label" data-i18n="totalInvested">총 투자금액</h3>
+                            <div id="total-invested" class="metric-value">$0</div>
+                        </div>
+                        <div class="metric-card" data-metric="value">
+                            <h3 class="metric-label" data-i18n="currentValue">현재 포트폴리오 가치</h3>
+                            <div id="current-value" class="metric-value">$0</div>
+                        </div>
+                        <div class="metric-card" data-metric="pnl">
+                            <h3 class="metric-label" data-i18n="totalPnL">총 손익</h3>
+                            <div id="total-pnl" class="metric-value">$0 (0%)</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Dobby Roast Section -->
+                <section class="roast-section">
+                    <div class="card roast-card">
+                        <div class="card__header">
+                            <h2 data-i18n="roastTitle">🧙‍♂️ Dobby가 여러분의 포트폴리오를 평가해드립니다</h2>
+                            <button id="get-roast" class="btn btn--primary" data-i18n="getRoast" disabled>로스트 받기</button>
+                        </div>
+                        <div class="card__body">
+                            <div id="roast-content" class="roast-content">
+                                <p class="roast-placeholder" data-i18n="roastPlaceholder">포트폴리오를 추가한 후 Dobby의 신랄한 조언을 받아보세요!</p>
+                            </div>
+                            <div id="roast-loading" class="loading-state hidden">
+                                <div class="loading-spinner"></div>
+                                <p data-i18n="loadingRoast">Dobby가 당신의 포트폴리오를 분석 중...</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="container">
+                <p>&copy; 2025 Dobby's Crypto Roast. 가격 데이터는 CoinGecko에서 제공됩니다.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
