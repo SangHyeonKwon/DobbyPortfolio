@@ -1168,11 +1168,46 @@
   
   /* Responsive design */
   @media (max-width: 768px) {
+    /* 모바일 헤더 개선 */
+    .header-content {
+      flex-direction: column !important;
+      text-align: center !important;
+      gap: var(--space-8) !important;
+    }
+    
+    .header-left {
+      text-align: center !important;
+    }
+    
+    .header-controls {
+      justify-content: center !important;
+      flex-wrap: wrap !important;
+      gap: var(--space-8) !important;
+    }
+    
+    .app-title {
+      font-size: var(--font-size-2xl) !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    
+    .app-subtitle {
+      font-size: var(--font-size-sm) !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    
+    /* 테이블 헤더 숨김 (포트폴리오가 있을 때) */
+    .table-header {
+      display: none !important;
+    }
+    
     .form-row {
       grid-template-columns: 1fr;
     }
     
-    .table-header,
     .table-row {
       grid-template-columns: 1fr;
       gap: var(--space-8);
@@ -1193,9 +1228,31 @@
     .metrics-grid {
       grid-template-columns: 1fr;
     }
+  }
+  
+  /* 매우 작은 화면 (480px 이하) */
+  @media (max-width: 480px) {
+    .header-controls {
+      gap: var(--space-4) !important;
+    }
+    
+    .language-toggle {
+      width: 40px !important;
+      height: 40px !important;
+      font-size: var(--font-size-xs) !important;
+    }
+    
+    .twitter-link {
+      padding: var(--space-2) var(--space-3) !important;
+      font-size: var(--font-size-xs) !important;
+    }
     
     .app-title {
-      font-size: var(--font-size-3xl);
+      font-size: var(--font-size-xl) !important;
+    }
+    
+    .app-subtitle {
+      font-size: var(--font-size-xs) !important;
     }
   }
   
