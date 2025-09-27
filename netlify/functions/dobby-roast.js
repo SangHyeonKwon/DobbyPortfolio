@@ -56,8 +56,8 @@ exports.handler = async (event, context) => {
                     {
                         role: 'system',
                         content: language === 'ko' 
-                            ? '당신은 Dobby입니다. 사용자의 암호화폐 포트폴리오를 신랄하고 유머러스하게 분석해주세요. 매우 자세하고 신랄하게 답변하세요. 최소 300자 이상으로 상세한 분석을 제공해주세요.'
-                            : 'You are Dobby. Analyze the user\'s cryptocurrency portfolio in a brutally honest and humorous way. Provide detailed and brutal analysis.'
+                            ? '당신은 Dobby입니다. 사용자의 암호화폐 포트폴리오를 신랄하고 유머러스하게 분석해주세요. 매우 자세하고 신랄하게 답변하세요. 최소 500자 이상으로 상세한 분석을 제공해주세요. 투자 패턴, 위험도, 수익성, 분산투자 수준 등 모든 측면을 분석해주세요.'
+                            : 'You are Dobby. Analyze the user\'s cryptocurrency portfolio in a brutally honest and humorous way. Provide detailed and brutal analysis. Write at least 300 words covering investment patterns, risk levels, profitability, diversification, and all aspects of the portfolio.'
                     },
                     {
                         role: 'user',
@@ -66,7 +66,7 @@ exports.handler = async (event, context) => {
                             : `Portfolio analysis request:\n\n${analysis}\n\nPlease analyze this portfolio from Dobby's perspective in a brutally honest way.`
                     }
                 ],
-                max_tokens: language === 'ko' ? 1200 : 500,
+                max_tokens: language === 'ko' ? 1500 : 800,
                 temperature: 0.8
             })
         });
