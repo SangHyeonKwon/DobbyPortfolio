@@ -146,7 +146,7 @@ class CryptoPortfolioApp {
         
         try {
             // CoinGecko API에서 상위 100개 코인 목록 가져오기
-            const response = await fetch(`${this.coingeckoAPI}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false`);
+            const response = await fetch(`/.netlify/functions/coins-markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false`);
             
             if (!response.ok) {
                 throw new Error('코인 목록을 가져올 수 없습니다.');
@@ -292,7 +292,7 @@ class CryptoPortfolioApp {
         try {
             const coinIds = this.portfolio.map(item => item.coinId).join(',');
             const response = await fetch(
-                `${this.coingeckoAPI}/coins/markets?ids=${coinIds}&vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false`
+                `/.netlify/functions/coins-markets?ids=${coinIds}&vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false`
             );
             
             if (!response.ok) {
