@@ -222,13 +222,13 @@ class CryptoPortfolioApp {
         const purchasePrice = parseFloat(document.getElementById('purchase-price').value);
         
         if (!coinId || !quantity || !purchasePrice) {
-            alert('모든 필드를 올바르게 입력해주세요.');
+            showToast('모든 필드를 올바르게 입력해주세요.', 'error');
             return;
         }
         
         const coinInfo = this.coinMap[coinId];
         if (!coinInfo) {
-            alert('유효하지 않은 코인입니다.');
+            showToast('유효하지 않은 코인입니다.', 'error');
             return;
         }
         
@@ -569,8 +569,8 @@ class CryptoPortfolioApp {
     }
     
     showError(message) {
-        // Simple error display - could be enhanced with a proper toast system
-        alert(message);
+        // 토스트 메시지로 에러 표시
+        showToast(message, 'error');
     }
     
     savePortfolioToStorage() {
@@ -652,6 +652,54 @@ window.addEventListener('unhandledrejection', (e) => {
     console.error('Unhandled promise rejection:', e.reason);
     e.preventDefault();
 });
+
+// 토스트 메시지 함수
+function showToast(message, type = 'error') {
+    // 기존 토스트 제거
+    const existingToast = document.querySelector('.toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+    
+    // 토스트 생성
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    
+    // 스타일 적용
+    Object.assign(toast.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        background: type === 'error' ? '#ef4444' : '#10b981',
+        color: 'white',
+        padding: '12px 20px',
+        borderRadius: '8px',
+        fontSize: '14px',
+        fontWeight: '500',
+        zIndex: '10000',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+        transform: 'translateX(100%)',
+        transition: 'transform 0.3s ease-in-out'
+    });
+    
+    document.body.appendChild(toast);
+    
+    // 애니메이션으로 나타내기
+    setTimeout(() => {
+        toast.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // 3초 후 자동 제거
+    setTimeout(() => {
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 300);
+    }, 3000);
+}
 
 // Export app for testing purposes
 if (typeof module !== 'undefined' && module.exports) {
