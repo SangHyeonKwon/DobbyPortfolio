@@ -1243,8 +1243,14 @@
     }
     
     .twitter-link {
-      padding: var(--space-2) var(--space-3) !important;
-      font-size: var(--font-size-xs) !important;
+      width: 40px !important;
+      height: 40px !important;
+      padding: 0 !important;
+    }
+    
+    .twitter-icon {
+      width: 20px !important;
+      height: 20px !important;
     }
     
     .app-title {
