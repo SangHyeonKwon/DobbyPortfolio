@@ -506,7 +506,7 @@ class CryptoPortfolioApp {
         try {
             console.log('Dobby API 호출 시작...', this.portfolio);
             
-            const response = await fetch('/api/dobby-roast', {
+            const response = await fetch('/.netlify/functions/dobby-roast', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
